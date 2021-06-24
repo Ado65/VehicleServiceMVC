@@ -33,5 +33,10 @@ namespace VehicleService.Models
         Task ModelUpdateAsync(VehicleModel model);
 
         Task ModelDeleteAsync(int? id);
+
+        IEnumerable<VehicleModel> ModelSort(IEnumerable<VehicleModel> makes, string sortOrder);
+
+        Task<IEnumerable<VehicleModel>> ModelFilterAsync(string searchString);
+
     }
 }

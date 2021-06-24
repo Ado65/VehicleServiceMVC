@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace VehicleServiceMVC.Controllers
     {
         private readonly IVehicleService _vehicleService;
         private readonly IMapper _mapper;
+
         public VehicleModelController(IVehicleService vehicleService, IMapper mapper)
         {
             _vehicleService = vehicleService;
@@ -22,11 +24,40 @@ namespace VehicleServiceMVC.Controllers
         }
 
         // GET: VehicleModel
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            IEnumerable<VehicleModel> model =await _vehicleService.ModelGetAllAsync();
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.MakeNameSortParm = String.IsNullOrEmpty(sortOrder) ? "makeName_desc" : "";
+            ViewBag.ArbvSortParm = sortOrder == "arbv" ? "arbv_desc" : "arbv";
+            ViewBag.NameSortParm = sortOrder == "name" ? "name_desc" : "name";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            IEnumerable<VehicleModel> model = await _vehicleService.ModelGetAllAsync();
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                model = await _vehicleService.ModelFilterAsync(searchString);
+            }
+
+            model = _vehicleService.ModelSort(model, sortOrder);
+
+
+
             IEnumerable<ViewModelVehicleModel> viewModel = _mapper.Map<IEnumerable<VehicleModel>, IEnumerable<ViewModelVehicleModel>>(model);
-            return View(viewModel);
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(viewModel.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: VehicleModel/Details/5

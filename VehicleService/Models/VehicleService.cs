@@ -107,5 +107,39 @@ namespace VehicleService.Models
             await _contex.SaveChangesAsync();
         }
 
+        public IEnumerable<VehicleModel> ModelSort(IEnumerable<VehicleModel> model, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "makeName_desc":
+                    model = model.OrderByDescending(s => s.VehicleMake.Name);
+                    break;
+                case "arbv_desc":
+                    model = model.OrderByDescending(s => s.Abrv);
+                    break;
+                case "arbv":
+                    model = model.OrderBy(s => s.Abrv);
+                    break;
+                case "name_desc":
+                    model = model.OrderByDescending(s => s.Name);
+                    break;
+                case "name":
+                    model = model.OrderBy(s => s.Name);
+                    break;
+                default:
+                    model = model.OrderBy(s => s.VehicleMake.Name);
+                    break;
+            }
+            return model;
+        }
+
+        public async Task<IEnumerable<VehicleModel>> ModelFilterAsync(string searchString)
+        {
+            var model = from m in _contex.VehicleModels
+                       select m;
+            model = model.Where(n => n.VehicleMake.Name.Contains(searchString));
+            return await model.ToListAsync();
+        }
     }
 }
+

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using VehicleServiceMVC.Models;
 using VehicleService.Models;
 using AutoMapper;
+using PagedList;
 
 namespace VehicleServiceMVC.Controllers
 {
@@ -23,11 +24,22 @@ namespace VehicleServiceMVC.Controllers
         }
 
         // GET: VehicleMake
-        public async Task<ActionResult> Index(string sortOrder, string searchString)
+        public async Task<ActionResult> Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.ArbvSortParm = sortOrder == "arbv" ? "arbv_desc" : "arbv";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
 
             var make = await _vehicleService.MakeGetAllAsync();
 
@@ -39,8 +51,12 @@ namespace VehicleServiceMVC.Controllers
             make =  _vehicleService.MakeSort(make, sortOrder);
 
             IEnumerable<ViewModelVehicleMake> viewMake = _mapper.Map<IEnumerable<VehicleMake>, IEnumerable<ViewModelVehicleMake>>(make);
- 
-            return View(viewMake);
+
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+
+            return View(viewMake.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: VehicleMake/Details/5
