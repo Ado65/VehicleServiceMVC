@@ -32,5 +32,6 @@ namespace VehicleServiceMVC.AutoMapper
 
             return config;
         }
+
     }
 }

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace VehicleService.Models
 {
-    public class VehicleMake
+    public class VehicleMake : IVehicleMake
     {
         public int Id { get; set; }
         [Required]

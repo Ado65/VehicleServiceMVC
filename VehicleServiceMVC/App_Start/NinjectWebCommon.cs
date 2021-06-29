@@ -67,6 +67,13 @@ namespace VehicleService.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IVehicleService>().To<VehicleService1>();
+            kernel.Bind<IVehicleServiceModel>().To<VehicleServiceModel>();
+            kernel.Bind<IVehicleMake>().To<VehicleMake>();
+            kernel.Bind<IVehicleModel>().To<VehicleModel>();
+            kernel.Bind<IFiltering>().To<Filtering>();
+            kernel.Bind<ISorting>().To<Sorting>();
+            kernel.Bind<IPaging>().To<Paging>();
+
             var modules = new NinjectModule[]
             {
                     new AutoMapperModule(),

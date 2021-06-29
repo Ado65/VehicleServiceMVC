@@ -1,9 +1,10 @@
-﻿using System;
+﻿using PagedList;
+using PagedList.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using VehicleService.DAL;
 
 
@@ -11,135 +12,75 @@ namespace VehicleService.Models
 {
     public class VehicleService1 : IVehicleService
     {
-        private   VehicleServiceContext _contex;
+        private VehicleServiceContext _context;
         public VehicleService1(VehicleServiceContext context)
         {
-            _contex = context;
+            _context = context;
         }
 
-        public async Task MakeCreateAsync(VehicleMake make)
+        public async Task<IEnumerable<VehicleMake>> GetAllAsync()
         {
-
-            _contex.VehicleMakes.Add(make);
-            await _contex.SaveChangesAsync();
+           return await _context.VehicleMakes.ToListAsync();
         }
 
-        public async Task MakeDeleteAsync(int id)
+        public async Task<VehicleMake> GetByIdAsync(int? id)
         {
-            VehicleMake make = await _contex.VehicleMakes.FindAsync(id);
-            _contex.VehicleMakes.Remove(make);
-            await _contex.SaveChangesAsync();
+            return await _context.VehicleMakes.FindAsync(id);
         }
 
-        public async Task<IEnumerable<VehicleMake>> MakeGetAllAsync()
+        public async Task CreateAsync(VehicleMake make)
         {
-            return await _contex.VehicleMakes.ToListAsync();
+
+            _context.VehicleMakes.Add(make);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<VehicleMake> MakeGetByIdAsync(int? id)
+        public async Task UpdateAsync(VehicleMake make)
         {
-            return await _contex.VehicleMakes.FindAsync(id);
+            _context.Entry(make).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
 
-
-        public async Task MakeUpdateAsync(VehicleMake make)
+        public async Task DeleteAsync(int id)
         {
-            _contex.Entry(make).State = EntityState.Modified;
-            await _contex.SaveChangesAsync();
+            VehicleMake make = await _context.VehicleMakes.FindAsync(id);
+            _context.VehicleMakes.Remove(make);
+            await _context.SaveChangesAsync();
         }
 
-        public  IEnumerable<VehicleMake> MakeSort(IEnumerable<VehicleMake> makes, string sortOrder)
+        public async Task<IPagedList<VehicleMake>> GetWithPaginationAsync(Filtering filterName, Sorting sort, Paging page)
         {
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    makes =  makes.OrderByDescending(s => s.Name);
-                    break;
-                case "arbv_desc":
-                    makes = makes.OrderByDescending(s => s.Abrv);
-                    break;
-                case "arbv":
-                    makes = makes.OrderBy(s => s.Abrv);
-                    break;
-                default:
-                    makes = makes.OrderBy(s => s.Name);
-                    break;
-            }
-            return  makes;
-        }
-
-        public async Task<IEnumerable<VehicleMake>> MakeFilterAsync(string searchString)
-        {
-            var make = from m in _contex.VehicleMakes
-                         select m;
-            make = make.Where(n => n.Name.Contains(searchString));
-            return await make.ToListAsync();
-        }
-
-        //VehicleModels
-
-        public async Task ModelCreateAsync(VehicleModel model)
-        {
-            _contex.VehicleModels.Add(model);
-            await _contex.SaveChangesAsync();
-        }
-
-        public async Task ModelDeleteAsync(int? id)
-        {
-            VehicleModel model = await _contex.VehicleModels.FindAsync(id);
-            _contex.VehicleModels.Remove(model);
-            await _contex.SaveChangesAsync();
-        }
-
-        public async Task<IEnumerable<VehicleModel>> ModelGetAllAsync()
-        {
-            return await _contex.VehicleModels.ToListAsync();
-        }
-
-        public async Task<VehicleModel> ModelGetByIdAsync(int? id)
-        {
-            return await _contex.VehicleModels.FindAsync(id);
-        }
-
-        public async Task ModelUpdateAsync(VehicleModel model)
-        {
-            _contex.Entry(model).State = EntityState.Modified;
-            await _contex.SaveChangesAsync();
-        }
-
-        public IEnumerable<VehicleModel> ModelSort(IEnumerable<VehicleModel> model, string sortOrder)
-        {
-            switch (sortOrder)
-            {
-                case "makeName_desc":
-                    model = model.OrderByDescending(s => s.VehicleMake.Name);
-                    break;
-                case "arbv_desc":
-                    model = model.OrderByDescending(s => s.Abrv);
-                    break;
-                case "arbv":
-                    model = model.OrderBy(s => s.Abrv);
-                    break;
-                case "name_desc":
-                    model = model.OrderByDescending(s => s.Name);
-                    break;
-                case "name":
-                    model = model.OrderBy(s => s.Name);
-                    break;
-                default:
-                    model = model.OrderBy(s => s.VehicleMake.Name);
-                    break;
-            }
-            return model;
-        }
-
-        public async Task<IEnumerable<VehicleModel>> ModelFilterAsync(string searchString)
-        {
-            var model = from m in _contex.VehicleModels
+            var make = from m in _context.VehicleMakes
                        select m;
-            model = model.Where(n => n.VehicleMake.Name.Contains(searchString));
-            return await model.ToListAsync();
-        }
+
+            if (!String.IsNullOrEmpty(filterName.searchName))
+            {
+                make = make.Where(n => n.Name.Contains(filterName.searchName));
+            }
+
+            switch (sort.sortOrder)
+            {
+                case "name_desc":
+                    make = make.OrderByDescending(s => s.Name);
+                    break;
+                case "arbv_desc":
+                    make = make.OrderByDescending(s => s.Abrv);
+                    break;
+                case "arbv":
+                    make = make.OrderBy(s => s.Abrv);
+                    break;
+                default:
+                    make = make.OrderBy(s => s.Name);
+                    break;
+            }
+
+            int totalCount = await make.CountAsync();
+
+            var makeList = await make.Skip(page.itemsPerPage * (page.currentPage - 1)).Take(page.itemsPerPage).ToListAsync();
+
+            IPagedList<VehicleMake> pageOrders = new StaticPagedList<VehicleMake>(makeList, page.currentPage, page.itemsPerPage, totalCount);
+            return pageOrders;
+        }      
     }
 }
 

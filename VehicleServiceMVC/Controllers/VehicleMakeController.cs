@@ -30,33 +30,30 @@ namespace VehicleServiceMVC.Controllers
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.ArbvSortParm = sortOrder == "arbv" ? "arbv_desc" : "arbv";
 
+            var filtering = new Filtering();
+            var sorting = new Sorting();
+            var paging = new Paging();
+
             if (searchString != null)
             {
-                page = 1;
+               page = 1;
             }
             else
             {
                 searchString = currentFilter;
             }
-
             ViewBag.CurrentFilter = searchString;
 
-            var make = await _vehicleService.MakeGetAllAsync();
+            filtering.searchName = searchString;
+            sorting.sortOrder = sortOrder;
+            paging.currentPage = (page ?? 1);
+            paging.itemsPerPage = 5;
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                make = await _vehicleService.MakeFilterAsync(searchString);
-            }
+            var make = await _vehicleService.GetWithPaginationAsync(filtering, sorting, paging);
 
-            make =  _vehicleService.MakeSort(make, sortOrder);
+            var viewMake = _mapper.Map<IPagedList<VehicleMake>, IPagedList<ViewModelVehicleMake>>(make);
 
-            IEnumerable<ViewModelVehicleMake> viewMake = _mapper.Map<IEnumerable<VehicleMake>, IEnumerable<ViewModelVehicleMake>>(make);
-
-
-            int pageSize = 5;
-            int pageNumber = (page ?? 1);
-
-            return View(viewMake.ToPagedList(pageNumber, pageSize));
+            return View(viewMake);
         }
 
         // GET: VehicleMake/Details/5
@@ -66,7 +63,7 @@ namespace VehicleServiceMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake make = await _vehicleService.MakeGetByIdAsync(id);
+            VehicleMake make = await _vehicleService.GetByIdAsync(id);
             ViewModelVehicleMake viewMake = _mapper.Map<ViewModelVehicleMake>(make);
             if (viewMake == null)
             {
@@ -91,7 +88,7 @@ namespace VehicleServiceMVC.Controllers
             if (ModelState.IsValid)
             {
                 VehicleMake make = _mapper.Map<VehicleMake>(viewMake);
-                await _vehicleService.MakeCreateAsync(make);
+                await _vehicleService.CreateAsync(make);
                 return RedirectToAction("Index");
             }
 
@@ -106,7 +103,7 @@ namespace VehicleServiceMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake make = await _vehicleService.MakeGetByIdAsync(id);
+            VehicleMake make = await _vehicleService.GetByIdAsync(id);
             ViewModelVehicleMake viewMake = _mapper.Map<ViewModelVehicleMake>(make);
             if (viewMake == null)
             {
@@ -125,7 +122,7 @@ namespace VehicleServiceMVC.Controllers
             if (ModelState.IsValid)
             {
                 VehicleMake make = _mapper.Map<VehicleMake>(viewMake);
-                await _vehicleService.MakeUpdateAsync(make);
+                await _vehicleService.UpdateAsync(make);
                 return RedirectToAction("Index");
             }
             return View(viewMake);
@@ -137,7 +134,7 @@ namespace VehicleServiceMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake make = await _vehicleService.MakeGetByIdAsync(id);
+            VehicleMake make = await _vehicleService.GetByIdAsync(id);
             ViewModelVehicleMake viewMake = _mapper.Map<ViewModelVehicleMake>(make);
             if (viewMake == null)
             {
@@ -151,7 +148,7 @@ namespace VehicleServiceMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            await _vehicleService.MakeDeleteAsync(id);
+            await _vehicleService.DeleteAsync(id);
             return RedirectToAction("Index");
         }
     }

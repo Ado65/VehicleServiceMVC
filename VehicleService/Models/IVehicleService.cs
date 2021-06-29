@@ -1,42 +1,23 @@
-﻿using System;
+﻿using PagedList;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace VehicleService.Models
 {
     public interface IVehicleService
     {
-        Task<IEnumerable<VehicleMake>> MakeGetAllAsync();
+        Task<IEnumerable<VehicleMake>> GetAllAsync();
 
-        Task<VehicleMake> MakeGetByIdAsync(int? id);
+        Task<VehicleMake> GetByIdAsync(int? id);
 
-        Task MakeCreateAsync(VehicleMake make);
+        Task CreateAsync(VehicleMake make);
 
-        Task MakeUpdateAsync(VehicleMake make);
+        Task UpdateAsync(VehicleMake make);
 
-        Task MakeDeleteAsync(int id);
+        Task DeleteAsync(int id);
 
-        IEnumerable<VehicleMake> MakeSort(IEnumerable<VehicleMake> makes, string sortOrder);
+        Task<IPagedList<VehicleMake>> GetWithPaginationAsync(Filtering filterName, Sorting sort, Paging page);
 
-        Task<IEnumerable<VehicleMake>> MakeFilterAsync(string searchString);
-
-        //VehicleModels
-
-        Task<IEnumerable<VehicleModel>> ModelGetAllAsync();
-
-        Task<VehicleModel> ModelGetByIdAsync(int? id);
-
-        Task ModelCreateAsync(VehicleModel model);
-
-        Task ModelUpdateAsync(VehicleModel model);
-
-        Task ModelDeleteAsync(int? id);
-
-        IEnumerable<VehicleModel> ModelSort(IEnumerable<VehicleModel> makes, string sortOrder);
-
-        Task<IEnumerable<VehicleModel>> ModelFilterAsync(string searchString);
 
     }
 }
