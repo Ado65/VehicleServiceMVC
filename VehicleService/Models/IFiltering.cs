@@ -8,6 +8,6 @@ namespace VehicleService.Models
 {
     public interface IFiltering
     {
-        string searchName { get; set; }
+        string SearchName { get; set; }
     }
 }

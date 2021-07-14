@@ -17,7 +17,7 @@ namespace VehicleService.Models
 
         Task DeleteAsync(int? id);
 
-        Task<IPagedList<VehicleModel>> GetWithPaginationAsync(Filtering filterName, Sorting sort, Paging page);
+        Task<IPagedList<VehicleModel>> GetWithPaginationAsync(Filtering filterName, ISorting sort, IPaging page);
 
     }
 }

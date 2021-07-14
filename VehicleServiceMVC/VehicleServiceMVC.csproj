@@ -190,14 +190,12 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="AutoMapper\AutoMapperModule.cs" />
     <Compile Include="AutoMapper\AutoMapperProfile.cs" />
     <Compile Include="AutoMapper\PagedListConverter .cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VehicleMakeController.cs" />
-    <Compile Include="Controllers\VehicleModelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -270,9 +268,33 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VehicleService\VehicleService.csproj">
-      <Project>{ece33db6-923c-4f81-a66c-3da84546d5b3}</Project>
-      <Name>VehicleService</Name>
+    <ProjectReference Include="..\VehicleService.DAL\VehicleService.DAL.csproj">
+      <Project>{9171D444-0A85-47C4-8587-93F324E0DF6C}</Project>
+      <Name>VehicleService.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Model.Common\VehicleService.Model.Common.csproj">
+      <Project>{9E092547-96C1-4826-98B0-8F93949B6765}</Project>
+      <Name>VehicleService.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Model\VehicleService.Model.csproj">
+      <Project>{4FE375C6-CCA0-47DA-9B52-32473D7DDC99}</Project>
+      <Name>VehicleService.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Repository.Common\VehicleService.Repository.Common.csproj">
+      <Project>{4610364C-4940-417E-B20C-959EAE50827A}</Project>
+      <Name>VehicleService.Repository.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Repository\VehicleService.Repository.csproj">
+      <Project>{6857F27A-29F8-417E-B4FD-80B4AC42D612}</Project>
+      <Name>VehicleService.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Service.Common\VehicleService.Service.Common.csproj">
+      <Project>{DB08B7F4-0DAA-4A83-8DC5-E8E2D1E0D80E}</Project>
+      <Name>VehicleService.Service.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Service\VehicleService.Service.csproj">
+      <Project>{4BFD3EEC-DE5A-4D03-BDF0-D8AF92C753E7}</Project>
+      <Name>VehicleService.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

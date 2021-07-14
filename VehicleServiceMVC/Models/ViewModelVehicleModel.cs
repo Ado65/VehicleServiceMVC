@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using VehicleService.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using VehicleService.DAL.Entity;
 
 namespace VehicleServiceMVC.Models
 {

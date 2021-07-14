@@ -8,6 +8,6 @@ namespace VehicleService.Models
 {
     public interface ISorting
     {
-        string sortOrder { get; set; }
+        string SortOrder { get; set; }
     }
 }

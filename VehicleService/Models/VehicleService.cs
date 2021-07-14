@@ -53,12 +53,12 @@ namespace VehicleService.Models
             var make = from m in _context.VehicleMakes
                        select m;
 
-            if (!String.IsNullOrEmpty(filterName.searchName))
+            if (!String.IsNullOrEmpty(filterName.SearchName))
             {
-                make = make.Where(n => n.Name.Contains(filterName.searchName));
+                make = make.Where(n => n.Name.Contains(filterName.SearchName));
             }
 
-            switch (sort.sortOrder)
+            switch (sort.SortOrder)
             {
                 case "name_desc":
                     make = make.OrderByDescending(s => s.Name);
@@ -76,9 +76,9 @@ namespace VehicleService.Models
 
             int totalCount = await make.CountAsync();
 
-            var makeList = await make.Skip(page.itemsPerPage * (page.currentPage - 1)).Take(page.itemsPerPage).ToListAsync();
+            var makeList = await make.Skip(page.ItemsPerPage * (page.CurrentPage - 1)).Take(page.ItemsPerPage).ToListAsync();
 
-            IPagedList<VehicleMake> pageOrders = new StaticPagedList<VehicleMake>(makeList, page.currentPage, page.itemsPerPage, totalCount);
+            IPagedList<VehicleMake> pageOrders = new StaticPagedList<VehicleMake>(makeList, page.CurrentPage, page.ItemsPerPage, totalCount);
             return pageOrders;
         }      
     }

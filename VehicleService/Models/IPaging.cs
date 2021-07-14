@@ -8,7 +8,7 @@ namespace VehicleService.Models
 {
     public interface IPaging
     {
-         int currentPage { get; set; }
-         int itemsPerPage { get; set; }
+         int CurrentPage { get; set; }
+         int ItemsPerPage { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     public class Filtering : IFiltering
     {
 
-        public string searchName { get ; set ; }
+        public string SearchName { get ; set ; }
 
     }
 }

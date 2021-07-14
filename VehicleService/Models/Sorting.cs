@@ -7,6 +7,6 @@ namespace VehicleService.Models
 {
     public class Sorting : ISorting
     {
-        public string sortOrder { get; set; }
+        public string SortOrder { get; set; }
     }
 }

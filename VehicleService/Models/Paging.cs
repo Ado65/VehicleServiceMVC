@@ -7,7 +7,7 @@ namespace VehicleService.Models
 {
     public class Paging : IPaging
     {
-      public  int currentPage { get; set; }
-      public  int itemsPerPage { get; set; }
+      public  int CurrentPage { get; set; }
+      public  int ItemsPerPage { get; set; }
     }
 }

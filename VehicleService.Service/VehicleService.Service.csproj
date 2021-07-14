@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4BFD3EEC-DE5A-4D03-BDF0-D8AF92C753E7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VehicleService.Service</RootNamespace>
+    <AssemblyName>VehicleService.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoMapperProfile.cs" />
+    <Compile Include="DIModule.cs" />
+    <Compile Include="MakeService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VehicleService.DAL\VehicleService.DAL.csproj">
+      <Project>{9171D444-0A85-47C4-8587-93F324E0DF6C}</Project>
+      <Name>VehicleService.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Model.Common\VehicleService.Model.Common.csproj">
+      <Project>{9E092547-96C1-4826-98B0-8F93949B6765}</Project>
+      <Name>VehicleService.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Model\VehicleService.Model.csproj">
+      <Project>{4FE375C6-CCA0-47DA-9B52-32473D7DDC99}</Project>
+      <Name>VehicleService.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Repository.Common\VehicleService.Repository.Common.csproj">
+      <Project>{4610364C-4940-417E-B20C-959EAE50827A}</Project>
+      <Name>VehicleService.Repository.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Repository\VehicleService.Repository.csproj">
+      <Project>{6857F27A-29F8-417E-B4FD-80B4AC42D612}</Project>
+      <Name>VehicleService.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Service.Common\VehicleService.Service.Common.csproj">
+      <Project>{DB08B7F4-0DAA-4A83-8DC5-E8E2D1E0D80E}</Project>
+      <Name>VehicleService.Service.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

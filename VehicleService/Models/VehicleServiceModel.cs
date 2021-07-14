@@ -40,12 +40,12 @@ namespace VehicleService.Models
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IPagedList<VehicleModel>> GetWithPaginationAsync(Filtering filterName, Sorting sort, Paging page)
+        public async Task<IPagedList<VehicleModel>> GetWithPaginationAsync(Filtering filterName, ISorting sort, IPaging page)
         {
             var model = from m in _context.VehicleModels
                         select m;
 
-            switch (sort.sortOrder)
+            switch (sort.SortOrder)
             {
                 case "makeName_desc":
                     model = model.OrderByDescending(s => s.VehicleMake.Name);
@@ -66,7 +66,7 @@ namespace VehicleService.Models
                     model = model.OrderBy(s => s.VehicleMake.Name);
                     break;
             }
-            return await model.Where(x => x.VehicleMake.Name.Contains(filterName.searchName) || filterName.searchName == null).ToPagedListAsync(page.currentPage, page.itemsPerPage);
+            return await model.Where(x => x.VehicleMake.Name.Contains(filterName.SearchName) || filterName.SearchName == null).ToPagedListAsync(page.CurrentPage, page.ItemsPerPage);
 
         }
 

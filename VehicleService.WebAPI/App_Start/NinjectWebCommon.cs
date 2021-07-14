@@ -1,30 +1,28 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(VehicleService.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(VehicleService.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(VehicleService.WebAPI.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(VehicleService.WebAPI.App_Start.NinjectWebCommon), "Stop")]
 
-namespace VehicleService.App_Start
+namespace VehicleService.WebAPI.App_Start
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Web;
-    using AutoMapper;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
     using Ninject;
     using Ninject.Modules;
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
-    using VehicleService.Models;
-    using VehicleServiceMVC.AutoMapper;
+    using Ninject.Web.WebApi;
+    using System;
+    using System.Web;
+    using System.Web.Http;
+    using VehicleService.Service;
+    using VehicleService.WebAPI.AutoMapper;
 
-    public static class NinjectWebCommon 
+    public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application.
         /// </summary>
-        public static void Start() 
+        public static void Start()
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
@@ -51,6 +49,7 @@ namespace VehicleService.App_Start
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
                 RegisterServices(kernel);
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
                 return kernel;
             }
             catch
@@ -66,17 +65,11 @@ namespace VehicleService.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IVehicleService>().To<VehicleService1>();
-            kernel.Bind<IVehicleServiceModel>().To<VehicleServiceModel>();
-            kernel.Bind<IVehicleMake>().To<VehicleMake>();
-            kernel.Bind<IVehicleModel>().To<VehicleModel>();
-            kernel.Bind<IFiltering>().To<Filtering>();
-            kernel.Bind<ISorting>().To<Sorting>();
-            kernel.Bind<IPaging>().To<Paging>();
 
             var modules = new NinjectModule[]
             {
                     new AutoMapperModule(),
+                    new DIModule()
 
              };
             kernel.Load(modules);

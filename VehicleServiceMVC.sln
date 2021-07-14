@@ -3,9 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleServiceMVC", "VehicleServiceMVC\VehicleServiceMVC.csproj", "{012D0F4A-D0DA-4BD1-A7C2-B05C3163F5C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleService.DAL", "VehicleService.DAL\VehicleService.DAL.csproj", "{9171D444-0A85-47C4-8587-93F324E0DF6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleService", "VehicleService\VehicleService.csproj", "{ECE33DB6-923C-4F81-A66C-3DA84546D5B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleService.Common", "VehicleService.Common\VehicleService.Common.csproj", "{20071A2D-1B24-4881-B6E4-7E7DC9E725DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleService.Model.Common", "VehicleService.Model.Common\VehicleService.Model.Common.csproj", "{9E092547-96C1-4826-98B0-8F93949B6765}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleService.Model", "VehicleService.Model\VehicleService.Model.csproj", "{4FE375C6-CCA0-47DA-9B52-32473D7DDC99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleService.Repository.Common", "VehicleService.Repository.Common\VehicleService.Repository.Common.csproj", "{4610364C-4940-417E-B20C-959EAE50827A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleService.Repository", "VehicleService.Repository\VehicleService.Repository.csproj", "{6857F27A-29F8-417E-B4FD-80B4AC42D612}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleService.Service.Common", "VehicleService.Service.Common\VehicleService.Service.Common.csproj", "{DB08B7F4-0DAA-4A83-8DC5-E8E2D1E0D80E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleService.Service", "VehicleService.Service\VehicleService.Service.csproj", "{4BFD3EEC-DE5A-4D03-BDF0-D8AF92C753E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleService.WebAPI", "VehicleService.WebAPI\VehicleService.WebAPI.csproj", "{1216ED35-A6A4-43DA-8A19-9F5DFE60BA03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +27,42 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{012D0F4A-D0DA-4BD1-A7C2-B05C3163F5C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{012D0F4A-D0DA-4BD1-A7C2-B05C3163F5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{012D0F4A-D0DA-4BD1-A7C2-B05C3163F5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{012D0F4A-D0DA-4BD1-A7C2-B05C3163F5C9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ECE33DB6-923C-4F81-A66C-3DA84546D5B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ECE33DB6-923C-4F81-A66C-3DA84546D5B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ECE33DB6-923C-4F81-A66C-3DA84546D5B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ECE33DB6-923C-4F81-A66C-3DA84546D5B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9171D444-0A85-47C4-8587-93F324E0DF6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9171D444-0A85-47C4-8587-93F324E0DF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9171D444-0A85-47C4-8587-93F324E0DF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9171D444-0A85-47C4-8587-93F324E0DF6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20071A2D-1B24-4881-B6E4-7E7DC9E725DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20071A2D-1B24-4881-B6E4-7E7DC9E725DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20071A2D-1B24-4881-B6E4-7E7DC9E725DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20071A2D-1B24-4881-B6E4-7E7DC9E725DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E092547-96C1-4826-98B0-8F93949B6765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E092547-96C1-4826-98B0-8F93949B6765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E092547-96C1-4826-98B0-8F93949B6765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E092547-96C1-4826-98B0-8F93949B6765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FE375C6-CCA0-47DA-9B52-32473D7DDC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FE375C6-CCA0-47DA-9B52-32473D7DDC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FE375C6-CCA0-47DA-9B52-32473D7DDC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FE375C6-CCA0-47DA-9B52-32473D7DDC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4610364C-4940-417E-B20C-959EAE50827A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4610364C-4940-417E-B20C-959EAE50827A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4610364C-4940-417E-B20C-959EAE50827A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4610364C-4940-417E-B20C-959EAE50827A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6857F27A-29F8-417E-B4FD-80B4AC42D612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6857F27A-29F8-417E-B4FD-80B4AC42D612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6857F27A-29F8-417E-B4FD-80B4AC42D612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6857F27A-29F8-417E-B4FD-80B4AC42D612}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB08B7F4-0DAA-4A83-8DC5-E8E2D1E0D80E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB08B7F4-0DAA-4A83-8DC5-E8E2D1E0D80E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB08B7F4-0DAA-4A83-8DC5-E8E2D1E0D80E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB08B7F4-0DAA-4A83-8DC5-E8E2D1E0D80E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BFD3EEC-DE5A-4D03-BDF0-D8AF92C753E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BFD3EEC-DE5A-4D03-BDF0-D8AF92C753E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BFD3EEC-DE5A-4D03-BDF0-D8AF92C753E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BFD3EEC-DE5A-4D03-BDF0-D8AF92C753E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1216ED35-A6A4-43DA-8A19-9F5DFE60BA03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1216ED35-A6A4-43DA-8A19-9F5DFE60BA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1216ED35-A6A4-43DA-8A19-9F5DFE60BA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1216ED35-A6A4-43DA-8A19-9F5DFE60BA03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
