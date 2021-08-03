@@ -1,6 +1,6 @@
 ﻿namespace VehicleService.Model.Common
 {
-    public interface IViewModelVehicleMake
+    public interface IVehicleMake
     {
         string Abrv { get; set; }
         int Id { get; set; }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VehicleService.DAL.Entity
 {
-    public interface IVehicleModel
+    public interface IVehicleModelEntity
     {
         int Id { get; set; }
         [Column("MakeId")]

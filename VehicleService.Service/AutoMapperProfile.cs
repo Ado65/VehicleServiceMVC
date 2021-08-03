@@ -9,8 +9,8 @@ namespace VehicleService.Service
     {
         public AutoMapperProfile()
         {
-            CreateMap<VehicleMake, IViewModelVehicleMake>().ReverseMap();
-            CreateMap<IViewModelVehicleMake, ViewModelVehicleMake>();
+            CreateMap<VehicleMakeEntity, IVehicleMake>().ReverseMap();
+            CreateMap<IVehicleMake, VehicleMake>().ReverseMap();
         }
     }
 }

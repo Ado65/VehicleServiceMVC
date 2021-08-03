@@ -44,8 +44,8 @@
     <Compile Include="IFiltering.cs" />
     <Compile Include="IPaging.cs" />
     <Compile Include="ISorting.cs" />
-    <Compile Include="IViewModelVehicleMake.cs" />
-    <Compile Include="IViewModelVehicleModel.cs" />
+    <Compile Include="IVehicleMake.cs" />
+    <Compile Include="IVehicleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

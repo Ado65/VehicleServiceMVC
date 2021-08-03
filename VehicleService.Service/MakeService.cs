@@ -15,79 +15,45 @@ namespace VehicleService.Service
     public class MakeService : IMakeService
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly IGenericRepository<VehicleMake> genericRepository;
-        private readonly IMapper mapper;
 
-        public MakeService(IUnitOfWork unitOfWork, IGenericRepository<VehicleMake> genericRepository, IMapper mapper)
+        public MakeService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
-            this.genericRepository = genericRepository;
-            this.mapper = mapper;
         }
-        public async Task AddAsync(IViewModelVehicleMake makeToAdd)
+        public async Task<int> AddAsync(IVehicleMake makeToAdd)
         {
-            await unitOfWork.AddAsync<VehicleMake>(mapper.Map<IViewModelVehicleMake, VehicleMake>(makeToAdd));
-            await unitOfWork.CommitAsync();
+            var result =await unitOfWork.VehicleMake.AddAsync(makeToAdd);
+            return await unitOfWork.CommitAsync();
         }
 
-        public async Task UpdateAsync(IViewModelVehicleMake makeToUpdate)
+        public async Task UpdateAsync(IVehicleMake makeToUpdate)
         {
-            await unitOfWork.UpdateAsync<VehicleMake>(mapper.Map<IViewModelVehicleMake, VehicleMake>(makeToUpdate));
+            await unitOfWork.VehicleMake.UpdateAsync(makeToUpdate);
             await unitOfWork.CommitAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            await unitOfWork.DeleteAsync<VehicleMake>(id);
+            await unitOfWork.VehicleMake.DeleteAsync(id);
             await unitOfWork.CommitAsync();
         }
 
-        public async Task<IViewModelVehicleMake> GetByIdAsync(int id)
+        public async Task<IVehicleMake> GetByIdAsync(int id)
         {
-            var makeToGet = await genericRepository.GetByIdAsync(id);
-            return mapper.Map<VehicleMake, IViewModelVehicleMake>(makeToGet);
+            var makeToGet = await unitOfWork.VehicleMake.GetByIdAsync(id);
+            return makeToGet;
         }
 
-        public async Task<IPagedList<IViewModelVehicleMake>> GetAllAsync(IFiltering filterName, ISorting sort, IPaging page)
+        public async Task<IPagedList<IVehicleMake>> GetPagedAsync(IFiltering filterName, ISorting sort, IPaging page)
         {
-
-            Func<IQueryable<VehicleMake>, IOrderedQueryable<VehicleMake>> orderBy = null;
-            Expression<Func<VehicleMake, bool>> filter = null;
-
-            switch (sort.SortOrder)
-            {
-                case "name_desc":
-                    orderBy = q => q.OrderByDescending(s => s.Name);
-                    break;
-                case "arbv_desc":
-                    orderBy = q => q.OrderByDescending(s => s.Abrv);
-                    break;
-                case "arbv":
-                    orderBy = q => q.OrderBy(s => s.Abrv);
-                    break;
-                default:
-                    orderBy = q => q.OrderBy(s => s.Name);
-                    break;
-            }
-
-
-            if (filterName.SearchName != null)
-            {
-                filter = s => s.Name.Contains(filterName.SearchName);
-            }
-
-            var makeList = await genericRepository.GetAllAsync(filter, orderBy);
-            var makePagedList = mapper.Map<IEnumerable<VehicleMake>, IEnumerable<IViewModelVehicleMake>>(makeList);
-
-            return makePagedList.ToPagedList(page.CurrentPage, page.ItemsPerPage);
+            var makePaged = await unitOfWork.VehicleMake.GetPagedAsync(filterName, sort, page);
+            return makePaged;
         }
-        public async Task<IEnumerable<IViewModelVehicleMake>> GetAllNoPagingAsync()
+        public async Task<IEnumerable<IVehicleMake>> GetAllAsync()
         {
-            Expression<Func<VehicleMake, bool>> filter = null;
-            Func<IQueryable<VehicleMake>, IOrderedQueryable<VehicleMake>> orderBy = null;
 
-            var makeList = await genericRepository.GetAllAsync(filter, orderBy);
-            return mapper.Map<IEnumerable<VehicleMake>, IEnumerable<IViewModelVehicleMake>>(makeList);
+            var makeList = await unitOfWork.VehicleMake.GetAllAsync();
+            return makeList;
         }
     }
 }

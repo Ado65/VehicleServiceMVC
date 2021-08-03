@@ -11,5 +11,6 @@ namespace VehicleService.Repository.Common
         Task<int> UpdateAsync<T>(T entity) where T : class;
         Task<int> DeleteAsync<T>(T entity) where T : class;
         Task<int> DeleteAsync<T>(int id) where T : class;
+        IVehicleMakeRepository VehicleMake { get; }
     }
 }

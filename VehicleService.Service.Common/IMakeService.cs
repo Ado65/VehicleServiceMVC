@@ -7,17 +7,17 @@ namespace VehicleService.Service.Common
 {
     public interface IMakeService
     {
-        Task AddAsync(IViewModelVehicleMake makeToAdd);
+        Task<int> AddAsync(IVehicleMake makeToAdd);
 
-        Task UpdateAsync(IViewModelVehicleMake makeToUpdate);
+        Task UpdateAsync(IVehicleMake makeToUpdate);
 
         Task DeleteAsync(int id);
 
-        Task<IViewModelVehicleMake> GetByIdAsync(int id);
+        Task<IVehicleMake> GetByIdAsync(int id);
 
-        Task<IPagedList<IViewModelVehicleMake>> GetAllAsync(IFiltering filterName, ISorting sort, IPaging page);
+        Task<IPagedList<IVehicleMake>> GetPagedAsync(IFiltering filterName, ISorting sort, IPaging page);
 
-        Task<IEnumerable<IViewModelVehicleMake>> GetAllNoPagingAsync();
+        Task<IEnumerable<IVehicleMake>> GetAllAsync();
 
     }
 }

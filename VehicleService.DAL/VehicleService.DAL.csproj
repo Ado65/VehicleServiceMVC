@@ -51,16 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\IVehicleMake.cs" />
-    <Compile Include="Entity\IVehicleModel.cs" />
+    <Compile Include="Entity\IVehicleMakeEntity.cs" />
+    <Compile Include="Entity\IVehicleModelEntity.cs" />
     <Compile Include="Migrations\202107101318154_InitialCreate.cs" />
     <Compile Include="Migrations\202107101318154_InitialCreate.designer.cs">
       <DependentUpon>202107101318154_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entity\VehicleMake.cs" />
-    <Compile Include="Entity\VehicleModel.cs" />
+    <Compile Include="Entity\VehicleMakeEntity.cs" />
+    <Compile Include="Entity\VehicleModelEntity.cs" />
     <Compile Include="VehicleServiceContext.cs" />
   </ItemGroup>
   <ItemGroup>

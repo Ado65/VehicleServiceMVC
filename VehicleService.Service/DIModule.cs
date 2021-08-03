@@ -4,6 +4,7 @@ using VehicleService.Model.Common;
 using VehicleService.Repository;
 using VehicleService.Repository.Common;
 using VehicleService.Service.Common;
+using Ninject.Web.Common;
 
 namespace VehicleService.Service
 {
@@ -11,16 +12,17 @@ namespace VehicleService.Service
     {
         public override void Load()
         {
-            Bind<IVehicleMake>().To<VehicleMake>();
-            Bind<IVehicleModel>().To<VehicleModel>();
+            Bind<IVehicleMakeEntity>().To<VehicleMakeEntity>();
+            Bind<IVehicleModelEntity>().To<VehicleModelEntity>();
             Bind<IFiltering>().To<Filtering>();
             Bind<ISorting>().To<Sorting>();
             Bind<IPaging>().To<Paging>();
             Bind<IUnitOfWork>().To<UnitOfWork>();
             Bind<IMakeService>().To<MakeService>();
-            Bind<IViewModelVehicleMake>().To<ViewModelVehicleMake>();
-            Bind<IViewModelVehicleModel>().To<ViewModelVehicleModel>();
+            Bind<IVehicleMake>().To<VehicleMake>();
+            Bind<IVehicleModel>().To<VehicleModel>();
             Bind(typeof(IGenericRepository<>)).To(typeof(GenericRepository<>));
+            Bind<IVehicleMakeRepository>().To<VehicleMakeRepository>();
 
         }
 

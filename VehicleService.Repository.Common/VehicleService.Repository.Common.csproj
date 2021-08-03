@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,7 +46,21 @@
   <ItemGroup>
     <Compile Include="IGenericRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="IVehicleMakeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VehicleService.Model.Common\VehicleService.Model.Common.csproj">
+      <Project>{9E092547-96C1-4826-98B0-8F93949B6765}</Project>
+      <Name>VehicleService.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Model\VehicleService.Model.csproj">
+      <Project>{4FE375C6-CCA0-47DA-9B52-32473D7DDC99}</Project>
+      <Name>VehicleService.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,79 +14,79 @@
 
         protected override void Seed(VehicleService.DAL.VehicleServiceContext context)
         {
-            var make = new List<VehicleMake>
+            var make = new List<VehicleMakeEntity>
             {
-                new VehicleMake { Name = "BMW",   Abrv = "",},
-                new VehicleMake { Name = "Peugeot",   Abrv = "",},
-                new VehicleMake { Name = "Audi",   Abrv = "",},
-                new VehicleMake { Name = "Opel",   Abrv = "",},
-                new VehicleMake { Name = "Fiat",   Abrv = "",},
-                new VehicleMake { Name = "Ford",   Abrv = "",},
+                new VehicleMakeEntity { Name = "BMW",   Abrv = "",},
+                new VehicleMakeEntity { Name = "Peugeot",   Abrv = "",},
+                new VehicleMakeEntity { Name = "Audi",   Abrv = "",},
+                new VehicleMakeEntity { Name = "Opel",   Abrv = "",},
+                new VehicleMakeEntity { Name = "Fiat",   Abrv = "",},
+                new VehicleMakeEntity { Name = "Ford",   Abrv = "",},
 
             };
             make.ForEach(s => context.VehicleMakes.AddOrUpdate(p => p.Name, s));
             context.SaveChanges();
 
-            var models = new List<VehicleModel>
+            var models = new List<VehicleModelEntity>
             {
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "Audi").Id,
                     Name="A4"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "Audi").Id,
                     Name="A6"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "Audi").Id,
                     Name="R8"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "Audi").Id,
                     Name="Q2"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "Audi").Id,
                     Name="S8"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "Peugeot").Id,
                     Name="208"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "Peugeot").Id,
                     Name="508"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "Peugeot").Id,
                     Name="2008"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "Peugeot").Id,
                     Name="208"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "BMW").Id,
                     Name="1 Series"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "BMW").Id,
                     Name="2 Series"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "BMW").Id,
                     Name="3 Series"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "BMW").Id,
                     Name="X1"
                 },
-                new VehicleModel {
+                new VehicleModelEntity {
                     VehicleMakeId = make.Single(s => s.Name == "BMW").Id,
                     Name="X3"
                 }
             };
-            foreach (VehicleModel e in models)
+            foreach (VehicleModelEntity e in models)
             {
                 var ModoleDataBaseCheck = context.VehicleModels.Where(
                     s => s.VehicleMake.Id == e.VehicleMakeId).FirstOrDefault();

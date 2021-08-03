@@ -34,11 +34,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -52,14 +58,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork.cs" />
+    <Compile Include="VehicleMakeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VehicleService.DAL\VehicleService.DAL.csproj">
       <Project>{9171D444-0A85-47C4-8587-93F324E0DF6C}</Project>
       <Name>VehicleService.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Model.Common\VehicleService.Model.Common.csproj">
+      <Project>{9E092547-96C1-4826-98B0-8F93949B6765}</Project>
+      <Name>VehicleService.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleService.Model\VehicleService.Model.csproj">
+      <Project>{4FE375C6-CCA0-47DA-9B52-32473D7DDC99}</Project>
+      <Name>VehicleService.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\VehicleService.Repository.Common\VehicleService.Repository.Common.csproj">
       <Project>{4610364C-4940-417E-B20C-959EAE50827A}</Project>

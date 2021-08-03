@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using VehicleService.Model;
@@ -26,52 +28,89 @@ namespace VehicleService.WebAPI.Controllers
 
         // GET api/make
         [HttpGet]
-        public async Task<IEnumerable<IViewModelVehicleMake>> GetAllNoPagingAsync()
+        public async Task<HttpResponseMessage> GetAll()
         {
-            return await makeService.GetAllNoPagingAsync();
+            var makeAll = await makeService.GetAllAsync();
+            if (makeAll == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, makeAll);
         }
 
         // GET api/make/paging?page=&sortOrder=&searchString=
         [HttpGet]
         [Route("api/make/paging")]
-        public async Task<IEnumerable<IViewModelVehicleMake>> GetAllAsync(int? page, string sortOrder, string searchString)
+        public async Task<HttpResponseMessage> GetPaged(int? page, string sortOrder, string searchString)
         {
             //Note: Sorting- "name_desc", "arbv_desc", "arbv"
             paging.CurrentPage = (page ?? 1);
             paging.ItemsPerPage = 5;
             filtering.SearchName = searchString;
             sorting.SortOrder = sortOrder;
-            return await makeService.GetAllAsync(filtering, sorting, paging);
+
+            var makePaged= await makeService.GetPagedAsync(filtering, sorting, paging);
+
+            if (makePaged == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, makePaged);
+
         }
 
         // GET api/make/5
         [HttpGet]
-        public async Task<IViewModelVehicleMake> Get(int id)
+        public async Task<HttpResponseMessage> Get(int id)
         {
             var make = await makeService.GetByIdAsync(id);
-            return make;
+            if (make == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, make);
         }
 
         // POST api/make
         [HttpPost]
-        public async Task Post(ViewModelVehicleMake makeValue)
+        public async Task<HttpResponseMessage> Post(VehicleMake makeValue)
         {
-            await makeService.AddAsync(mapper.Map<ViewModelVehicleMake, IViewModelVehicleMake>(makeValue));
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+            await makeService.AddAsync(mapper.Map<VehicleMake, IVehicleMake>(makeValue));
+
+            return Request.CreateResponse(HttpStatusCode.Created);
         }
 
         // PUT api/make
         [HttpPut]
-        public async Task Put(ViewModelVehicleMake makeValue)
+        public async Task<HttpResponseMessage> Put(VehicleMake makeValue)
         {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+            if (await makeService.GetByIdAsync(makeValue.Id) == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            await makeService.UpdateAsync(mapper.Map<VehicleMake, IVehicleMake>(makeValue));
+            return Request.CreateResponse(HttpStatusCode.NoContent);
 
-            await makeService.UpdateAsync(mapper.Map<ViewModelVehicleMake, IViewModelVehicleMake>(makeValue));
         }
 
         // DELETE api/make/5
         [HttpDelete]
-        public async Task Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
+            if (await makeService.GetByIdAsync(id) == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
             await makeService.DeleteAsync(id);
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
     }
 }

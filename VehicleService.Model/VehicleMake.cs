@@ -3,7 +3,7 @@ using VehicleService.Model.Common;
 
 namespace VehicleService.Model
 {
-    public class ViewModelVehicleMake : IViewModelVehicleMake
+    public class VehicleMake : IVehicleMake
     {
         public int Id { get; set; }
         [Required]

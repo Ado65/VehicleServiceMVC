@@ -2,7 +2,7 @@
 
 namespace VehicleService.DAL.Entity
 {
-    public interface IVehicleMake
+    public interface IVehicleMakeEntity
     {
         int Id { get; set; }
         [Required]

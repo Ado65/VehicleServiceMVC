@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
@@ -11,15 +12,20 @@ namespace VehicleService.Repository
     public class UnitOfWork : IUnitOfWork
     {
         protected VehicleServiceContext DbContext { get; private set; }
+        public IVehicleMakeRepository VehicleMake { get; }
+        private IMapper mapper;
 
-        public UnitOfWork(VehicleServiceContext dbContext)
+        public UnitOfWork(VehicleServiceContext dbContext, IMapper mapper)
         {
             if (dbContext == null)
             {
                 throw new ArgumentNullException("DbContext");
             }
             DbContext = dbContext;
+            this.mapper = mapper;
+            VehicleMake = new VehicleMakeRepository(DbContext,mapper);
         }
+
 
         public virtual Task<int> AddAsync<T>(T entity) where T : class
         {
@@ -102,7 +108,7 @@ namespace VehicleService.Repository
             {
                 result = await DbContext.SaveChangesAsync();
                 scope.Complete();
-            }
+            }           
             return result;
         }
 
