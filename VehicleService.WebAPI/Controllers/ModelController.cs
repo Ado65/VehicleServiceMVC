@@ -12,38 +12,38 @@ using VehicleService.WebAPI.Models;
 
 namespace VehicleService.WebAPI.Controllers
 {
-    public class MakeController : ApiController
+    public class ModelController : ApiController
     {
-        private readonly IMakeService _makeService;
+        private readonly IModelService _modelService;
         private readonly IMapper _mapper;
         private IPaging _paging;
         private IFiltering _filtering;
         private ISorting _sorting;
-        public MakeController(IMakeService makeService, IMapper mapper, IPaging paging, IFiltering filtering, ISorting sorting)
+        public ModelController(IModelService modelService, IMapper mapper, IPaging paging, IFiltering filtering, ISorting sorting)
         {
-            _makeService = makeService;
+            _modelService = modelService;
             _mapper = mapper;
             _paging = paging;
             _filtering = filtering;
             _sorting = sorting;
         }
 
-        // GET api/make
+        // GET api/model
         [HttpGet]
         public async Task<HttpResponseMessage> GetAll()
         {
-            var makeAll = await _makeService.GetAllAsync();
-            if (makeAll == null)
+            var modelAll = await _modelService.GetAllAsync();
+            if (modelAll == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
-            var makeAllVM = _mapper.Map<IEnumerable<IVehicleMakeVM>>(makeAll);
-            return Request.CreateResponse(HttpStatusCode.OK, makeAllVM);
+            var modelAllVM = _mapper.Map<IEnumerable<IVehicleModelVM>>(modelAll);
+            return Request.CreateResponse(HttpStatusCode.OK, modelAllVM);
         }
 
-        // GET api/make/paging?page=&sortOrder=&searchString=
+        // GET api/model/paging?page=&sortOrder=&searchString=
         [HttpGet]
-        [Route("api/make/paging")]
+        [Route("api/model/paging")]
         public async Task<HttpResponseMessage> GetPaged(int? page, string sortOrder, string searchString)
         {
             //Note: Sorting- "name_desc", "arbv_desc", "arbv"
@@ -52,70 +52,70 @@ namespace VehicleService.WebAPI.Controllers
             _filtering.SearchName = searchString;
             _sorting.SortOrder = sortOrder;
 
-            var makePaged= await _makeService.GetPagedAsync(_filtering, _sorting, _paging);
+            var modelPaged = await _modelService.GetPagedAsync(_filtering, _sorting, _paging);
 
-            if (makePaged == null)
+            if (modelPaged == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
-            var makePagedVM = _mapper.Map<IPagedList<IVehicleMakeVM>>(makePaged);
-            return Request.CreateResponse(HttpStatusCode.OK, makePagedVM);
+            var modelPagedVM = _mapper.Map<IPagedList<IVehicleModelVM>>(modelPaged);
+            return Request.CreateResponse(HttpStatusCode.OK, modelPagedVM);
 
         }
 
-        // GET api/make/5
+        // GET api/model/5
         [HttpGet]
         public async Task<HttpResponseMessage> Get(int id)
         {
-            var make = await _makeService.GetByIdAsync(id);
-            if (make == null)
+            var model = await _modelService.GetByIdAsync(id);
+            if (model == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
-            var makeVM = _mapper.Map<IVehicleMakeVM>(make);
-            return Request.CreateResponse(HttpStatusCode.OK, makeVM);
+            var modelVM = _mapper.Map<IVehicleModelVM>(model);
+            return Request.CreateResponse(HttpStatusCode.OK, modelVM);
         }
-
-        // POST api/make
+        // POST api/model
         [HttpPost]
-        public async Task<HttpResponseMessage> Post(VehicleMake makeValue)
+        public async Task<HttpResponseMessage> Post(VehicleModelUpdateVM modelValue)
         {
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-            await _makeService.AddAsync(_mapper.Map<VehicleMake, IVehicleMake>(makeValue));
+            var modelToAdd = _mapper.Map<IVehicleModel>(modelValue);
+            var makeToCheck = _mapper.Map<IVehicleMake>(modelValue);
+            await _modelService.AddAsync(modelToAdd, makeToCheck);
 
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
-        // PUT api/make/5
+        // PUT api/model
         [HttpPut]
-        public async Task<HttpResponseMessage> Put(int id, VehicleMake makeValue)
+        public async Task<HttpResponseMessage> Put(VehicleModel modelValue)
         {
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-            //var makeToUpdate = await _makeService.GetByIdAsync(id);
-            //if (makeToUpdate == null)
+            //var modelToUpdate = await _modelService.GetByIdAsync(modelValue.Id);
+            //if (modelToUpdate == null)
             //{
             //    return Request.CreateResponse(HttpStatusCode.NotFound);
             //}
-            await _makeService.UpdateAsync(_mapper.Map<IVehicleMake>(makeValue));
+            await _modelService.UpdateAsync(_mapper.Map<IVehicleModel>(modelValue));
             return Request.CreateResponse(HttpStatusCode.NoContent);
-
         }
 
-        // DELETE api/make/5
+        // DELETE api/model/5
         [HttpDelete]
         public async Task<HttpResponseMessage> Delete(int id)
         {
-            if (await _makeService.GetByIdAsync(id) == null)
+            if (await _modelService.GetByIdAsync(id) == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
-            await _makeService.DeleteAsync(id);
+            await _modelService.DeleteAsync(id);
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
     }

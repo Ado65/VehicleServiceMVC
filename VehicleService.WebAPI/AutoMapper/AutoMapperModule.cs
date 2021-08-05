@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Ninject;
 using Ninject.Modules;
+using VehicleService.Model.Common;
+using VehicleService.WebAPI.Models;
 
 namespace VehicleService.WebAPI.AutoMapper
 {
@@ -23,8 +25,8 @@ namespace VehicleService.WebAPI.AutoMapper
             var config = new MapperConfiguration(cfg =>
             {
                 // Add all profiles in current assembly
-                // cfg.AddMaps(GetType().Assembly);
-                cfg.AddMaps(new[] { "VehicleService.Service" });
+                cfg.AddMaps(GetType().Assembly);
+                cfg.AddMaps(new[] { "VehicleService.Service"});
             });
 
             return config;

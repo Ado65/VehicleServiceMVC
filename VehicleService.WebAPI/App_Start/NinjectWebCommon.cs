@@ -69,6 +69,7 @@ namespace VehicleService.WebAPI.App_Start
             var modules = new NinjectModule[]
             {
                     new AutoMapperModule(),
+                    new DIModuleWebAPI(),
                     new DIModule()
 
              };

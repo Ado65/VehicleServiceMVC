@@ -14,40 +14,33 @@ using VehicleService.Repository.Common;
 
 namespace VehicleService.Repository
 {
-    public class VehicleMakeRepository : IVehicleMakeRepository
+    public class VehicleModelRepository : IVehicleModelRepository
     {
         protected VehicleServiceContext _DbContext;
         private readonly IMapper _mapper;
-        public VehicleMakeRepository(VehicleServiceContext DbContext, IMapper mapper)
+        public VehicleModelRepository(VehicleServiceContext DbContext, IMapper mapper)
         {
             _DbContext = DbContext;
             _mapper = mapper;
         }
-
-        public async Task<IVehicleMake> GetByIdAsync(int id)
+        public async Task<IVehicleModel> GetByIdAsync(int id)
         {
-            var entity = await _DbContext.Set<VehicleMakeEntity>().FindAsync(id);
-            var make = _mapper.Map<IVehicleMake>(entity);
-            return make;
+            var entity = await _DbContext.Set<VehicleModelEntity>().FindAsync(id);
+            var model = _mapper.Map<IVehicleModel>(entity);
+            return model;
         }
 
-        public async Task<IVehicleMake> GetByNameAsync(string targetName)
+
+        public async Task<IEnumerable<IVehicleModel>> GetAllAsync()
         {
-            var entity = await _DbContext.Set<VehicleMakeEntity>().FirstOrDefaultAsync(n=> n.Name==targetName);
-            var make = _mapper.Map<IVehicleMake>(entity);
-            return make;
+            var entityList = await _DbContext.Set<VehicleModelEntity>().ToListAsync();
+            var modelList = _mapper.Map<IEnumerable<IVehicleModel>>(entityList);
+            return modelList;
         }
 
-        public async Task<IEnumerable<IVehicleMake>> GetAllAsync()
+        public async Task<IPagedList<IVehicleModel>> GetPagedAsync(IFiltering filterName, ISorting sort, IPaging page)
         {
-            var entityList = await _DbContext.Set<VehicleMakeEntity>().ToListAsync();
-            var makeList = _mapper.Map<IEnumerable<IVehicleMake>>(entityList);
-            return makeList;
-        }
-
-        public async Task<IPagedList<IVehicleMake>> GetPagedAsync(IFiltering filterName, ISorting sort, IPaging page)
-        {
-            Func<IQueryable<VehicleMakeEntity>, IOrderedQueryable<VehicleMakeEntity>> orderBy = null;
+            Func<IQueryable<VehicleModelEntity>, IOrderedQueryable<VehicleModelEntity>> orderBy = null;
 
             switch (sort.SortOrder)
             {
@@ -65,17 +58,16 @@ namespace VehicleService.Repository
                     break;
             }
 
-            var entityList = await orderBy(_DbContext.VehicleMakes).Where(x => x.Name.Contains(filterName.SearchName) || filterName.SearchName == null).ToListAsync();
-            var makeList = _mapper.Map<IEnumerable<IVehicleMake>>(entityList);
+            IEnumerable<VehicleModelEntity> entityList = await orderBy(_DbContext.Set<VehicleModelEntity>()).Where(x => x.Name.Contains(filterName.SearchName) || filterName.SearchName == null).ToListAsync();
+            var makeList = _mapper.Map<IEnumerable<IVehicleModel>>(entityList);
             return makeList.ToPagedList(page.CurrentPage, page.ItemsPerPage);
-
         }
 
-        public async Task<int> AddAsync(IVehicleMake vehicleMakeAdd)
+        public async Task<int> AddAsync(IVehicleModel vehicleModleAdd)
         {
             try
             {
-                var entity = _mapper.Map<VehicleMakeEntity>(vehicleMakeAdd);
+                var entity = _mapper.Map<VehicleModelEntity>(vehicleModleAdd);
 
                 DbEntityEntry dbEntityEntry = _DbContext.Entry(entity);
                 if (dbEntityEntry.State != EntityState.Detached)
@@ -84,7 +76,7 @@ namespace VehicleService.Repository
                 }
                 else
                 {
-                    _DbContext.Set<VehicleMakeEntity>().Add(entity);
+                    _DbContext.Set<VehicleModelEntity>().Add(entity);
                 }
                 return await Task.FromResult(1);
             }
@@ -94,15 +86,15 @@ namespace VehicleService.Repository
             }
         }
 
-        public Task<int> UpdateAsync(IVehicleMake vehicleMakeUpdate)
+        public Task<int> UpdateAsync(IVehicleModel vehicleModelUpdate)
         {
-            var entity = _mapper.Map<VehicleMakeEntity>(vehicleMakeUpdate);
+            var entity = _mapper.Map<VehicleModelEntity>(vehicleModelUpdate);
             try
             {
                 DbEntityEntry dbEntityEntry = _DbContext.Entry(entity);
                 if (dbEntityEntry.State == EntityState.Detached)
                 {
-                    _DbContext.Set<VehicleMakeEntity>().Attach(entity);
+                    _DbContext.Set<VehicleModelEntity>().Attach(entity);
                 }
                 dbEntityEntry.State = EntityState.Modified;
                 return Task.FromResult(1);
@@ -113,10 +105,9 @@ namespace VehicleService.Repository
             }
         }
 
-
         public Task<int> DeleteAsync(int id)
         {
-            var entity = _DbContext.Set<VehicleMakeEntity>().Find(id);
+            var entity = _DbContext.Set<VehicleModelEntity>().Find(id);
             if (entity == null)
             {
                 return Task.FromResult(0);
@@ -130,8 +121,8 @@ namespace VehicleService.Repository
                 }
                 else
                 {
-                    _DbContext.Set<VehicleMakeEntity>().Attach(entity);
-                    _DbContext.Set<VehicleMakeEntity>().Remove(entity);
+                    _DbContext.Set<VehicleModelEntity>().Attach(entity);
+                    _DbContext.Set<VehicleModelEntity>().Remove(entity);
                 }
                 return Task.FromResult(1);
             }
@@ -141,6 +132,5 @@ namespace VehicleService.Repository
 
             }
         }
-
     }
 }

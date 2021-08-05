@@ -14,46 +14,47 @@ namespace VehicleService.Service
 {
     public class MakeService : IMakeService
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public MakeService(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
-        }
-        public async Task<int> AddAsync(IVehicleMake makeToAdd)
-        {
-            var result =await unitOfWork.VehicleMake.AddAsync(makeToAdd);
-            return await unitOfWork.CommitAsync();
-        }
-
-        public async Task UpdateAsync(IVehicleMake makeToUpdate)
-        {
-            await unitOfWork.VehicleMake.UpdateAsync(makeToUpdate);
-            await unitOfWork.CommitAsync();
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            await unitOfWork.VehicleMake.DeleteAsync(id);
-            await unitOfWork.CommitAsync();
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IVehicleMake> GetByIdAsync(int id)
         {
-            var makeToGet = await unitOfWork.VehicleMake.GetByIdAsync(id);
+            var makeToGet = await _unitOfWork._VehicleMake.GetByIdAsync(id);
             return makeToGet;
         }
 
         public async Task<IPagedList<IVehicleMake>> GetPagedAsync(IFiltering filterName, ISorting sort, IPaging page)
         {
-            var makePaged = await unitOfWork.VehicleMake.GetPagedAsync(filterName, sort, page);
+            var makePaged = await _unitOfWork._VehicleMake.GetPagedAsync(filterName, sort, page);
             return makePaged;
         }
         public async Task<IEnumerable<IVehicleMake>> GetAllAsync()
         {
 
-            var makeList = await unitOfWork.VehicleMake.GetAllAsync();
+            var makeList = await _unitOfWork._VehicleMake.GetAllAsync();
             return makeList;
+        }
+
+        public async Task<int> AddAsync(IVehicleMake makeToAdd)
+        {
+            var result = await _unitOfWork._VehicleMake.AddAsync(makeToAdd);
+            return await _unitOfWork.CommitAsync();
+        }
+
+        public async Task UpdateAsync(IVehicleMake makeToUpdate)
+        {
+            await _unitOfWork._VehicleMake.UpdateAsync(makeToUpdate);
+            await _unitOfWork.CommitAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            await _unitOfWork._VehicleMake.DeleteAsync(id);
+            await _unitOfWork.CommitAsync();
         }
     }
 }

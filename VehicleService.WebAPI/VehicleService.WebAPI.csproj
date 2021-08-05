@@ -266,6 +266,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DIModuleWebAPI.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -299,11 +300,20 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="AutoMapper\AutoMapperModule.cs" />
+    <Compile Include="AutoMapper\AutoMapperProfileWebAPI.cs" />
+    <Compile Include="AutoMapper\PagedListConverter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MakeController.cs" />
+    <Compile Include="Controllers\ModelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\IVehicleMakeVM.cs" />
+    <Compile Include="Models\IVehicleModelUpdateVM.cs" />
+    <Compile Include="Models\IVehicleModelVM.cs" />
+    <Compile Include="Models\VehicleMakeVM.cs" />
+    <Compile Include="Models\VehicleModelUpdateVM.cs" />
+    <Compile Include="Models\VehicleModelVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -359,8 +369,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Make\" />
+    <Folder Include="Views\Model\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

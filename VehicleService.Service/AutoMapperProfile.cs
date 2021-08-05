@@ -11,6 +11,7 @@ namespace VehicleService.Service
         {
             CreateMap<VehicleMakeEntity, IVehicleMake>().ReverseMap();
             CreateMap<IVehicleMake, VehicleMake>().ReverseMap();
+            CreateMap<VehicleModelEntity, IVehicleModel>().ReverseMap();
         }
     }
 }

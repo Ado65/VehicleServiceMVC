@@ -48,5 +48,11 @@
     <Compile Include="IVehicleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VehicleService.DAL\VehicleService.DAL.csproj">
+      <Project>{9171D444-0A85-47C4-8587-93F324E0DF6C}</Project>
+      <Name>VehicleService.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

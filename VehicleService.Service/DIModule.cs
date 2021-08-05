@@ -23,6 +23,8 @@ namespace VehicleService.Service
             Bind<IVehicleModel>().To<VehicleModel>();
             Bind(typeof(IGenericRepository<>)).To(typeof(GenericRepository<>));
             Bind<IVehicleMakeRepository>().To<VehicleMakeRepository>();
+            Bind<IVehicleModelRepository>().To<VehicleModelRepository>();
+            Bind<IModelService>().To<ModelService>();
 
         }
 
